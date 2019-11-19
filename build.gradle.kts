@@ -20,3 +20,8 @@ dependencies {
     testCompile("io.kotlintest:kotlintest-runner-junit5:3.3.2")
     testCompile("junit:junit:4.12")
 }
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+}
