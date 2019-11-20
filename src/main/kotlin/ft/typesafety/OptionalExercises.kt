@@ -68,6 +68,8 @@ object OptionalExercises1 {
 
 object OptionalExercises2 {
 
+  private fun <A, B> Map<A, B>.getOption(key: A): Option<B> = Option.fromNullable(this[key])
+
   val hosts = mapOf("host1" to "squareup.com", "host2" to "test.squareup.com", "host3" to "netflix.com")
   val envs = mapOf("squareup.com" to "prod", "test.squareup.com" to "test", "amazon.com" to "stage")
 
