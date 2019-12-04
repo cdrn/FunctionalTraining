@@ -41,91 +41,36 @@ object RecursionExercises {
   fun minusOne(n: Int) = n - 1
 
   // Add two non-negative Integers together.  You are only allowed to use plusOne and minusOne above
-  fun add(a: Int, b: Int): Int = when(a) {
-    0 -> b
-    else -> add(minusOne(a), plusOne(b))
-  }
+  fun add(a: Int, b: Int): Int = TODO()
 
   // You are not permitted to use any list functions such as map, flatMap, ++, flatten etc
-   fun sum(l: FunList<Int>): Int {
-    tailrec fun go(acc:Int, rest: FunList<Int>): Int = when(rest) {
-      is Nil -> acc
-      is Cons -> go(acc + rest.head, rest.tail)
-    }
-   return go(0, l)
-  }
+   fun sum(l: FunList<Int>): Int = TODO()
 
   //Again no list functions are permitted for the following
-  fun <A> length(x: FunList<A>): Int =
-    when(x) {
-      is Nil -> 0
-      is Cons -> 1 + length(x.tail)
-    }
-
+  fun <A> length(x: FunList<A>): Int = TODO()
 
   // Do you notice anything similar between sum and length? Hmm...
 
   // Mapping over a list.  You are given a FunList of type A and a function converting an A to a B
   // and you give back a list of type B.  No list functions allowed!
-  fun <A, B> map(x: FunList<A>, f: (A) -> B): FunList<B> {
-    fun go(rest: FunList<A>): FunList<B> {
-      return when(rest) {
-        is Nil -> Nil
-        is Cons -> Cons(f(rest.head), go(rest.tail))
-      }
-    }
-    return go(x)
-  }
+  fun <A, B> map(x: FunList<A>, f: (A) -> B): FunList<B> = TODO()
 
   // Given a function from A -> Boolean, return a list with only those item where the function returned true.
-  fun <A> filter(x: FunList<A>, f: (A) -> Boolean): FunList<A> {
-    fun go(rest: FunList<A>): FunList<A> = when(rest) {
-      is Nil -> Nil
-      is Cons -> if (f(rest.head)) {
-        Cons(rest.head, go(rest.tail))
-      } else {
-        go(rest.tail)
-      }
-    }
-    return go(x)
-  }
+  fun <A> filter(x: FunList<A>, f: (A) -> Boolean): FunList<A> = TODO()
 
   // This pattern should be familiar by now... psst... look at add.
-  fun <A> append(x: FunList<A>, y: FunList<A>): FunList<A> = when(x) {
-    is Nil -> y
-    is Cons -> Cons(x.head, append(x.tail, y))
-  }
+  fun <A> append(x: FunList<A>, y: FunList<A>): FunList<A> = TODO()
 
   // Flatten a list of lists to a single list.  Remember you can't use list.flatten.  Can you use a previous
   // solution to solve this one?
-  fun <A> flatten(x: FunList<FunList<A>>): FunList<A> = when(x) {
-    is Nil -> Nil
-    is Cons -> append(x.head, flatten(x.tail))
-  }
+  fun <A> flatten(x: FunList<FunList<A>>): FunList<A> = TODO()
 
   // Follow the types.  You've done a great job getting here. Follow the types.
-  fun <A, B> flatMap(x: FunList<A>, f: (A) -> FunList<B>): FunList<B> = flatten(map(x,f))
+  fun <A, B> flatMap(x: FunList<A>, f: (A) -> FunList<B>): FunList<B> = TODO()
 
   // Maximum of the empty list is 0
-  fun maximum(x: FunList<Int>): Int {
-    tailrec fun go(max:Int, list: FunList<Int>): Int = when(list) {
-      is Nil -> max
-      is Cons -> {
-        val newMax = if (list.head > max) list.head else max
-        go(newMax, list.tail)
-      }
-    }
-
-    return go(0, x)
-
-  }
+  fun maximum(x: FunList<Int>): Int = TODO()
 
   // Reverse a list
-  fun <A> reverse(x: FunList<A>): FunList<A> {
-    tailrec fun go(acc: FunList<A>, rest:FunList<A>): FunList<A> = when(rest) {
-      is Nil -> acc
-      is Cons -> go(Cons(rest.head, acc), rest.tail)
-    }
-    return go(Nil, x)
-  }
+  fun <A> reverse(x: FunList<A>): FunList<A> = TODO()
 }
