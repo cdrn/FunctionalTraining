@@ -8,7 +8,7 @@ package ft.recursion
  *
  * You can't use any of the standard list functions, like `map`, `filter`, `flatMap`, `append`, `:::`, `:+`, etc.
  *
- * But you can always use `::` to construct a new list by prepending an element to another list.
+ * But you can always use `Cons(head, tail)` to construct a new list by prepending an element to another list.
  *
  * You CAN and are encouraged to use the solutions from the exercises below to solve the harder
  * ones towards the end.
@@ -25,8 +25,8 @@ package ft.recursion
 
 sealed class FunList<out A> {
   companion object {
-    operator fun <A>invoke(vararg l:A ): FunList<A> = invoke(listOf(*l))
-    operator fun <A>invoke(l:List<A>): FunList<A> = l.foldRight(Nil, { e:A, acc: FunList<A> -> Cons<A>(e,acc)})
+    operator fun <A> invoke(vararg l: A): FunList<A> = invoke(listOf(*l))
+    operator fun <A> invoke(l: List<A>): FunList<A> = l.foldRight(Nil, { e: A, acc: FunList<A> -> Cons<A>(e, acc) })
   }
 }
 
@@ -44,7 +44,7 @@ object RecursionExercises {
   fun add(a: Int, b: Int): Int = TODO()
 
   // You are not permitted to use any list functions such as map, flatMap, ++, flatten etc
-   fun sum(l: FunList<Int>): Int = TODO()
+  fun sum(x: FunList<Int>): Int = TODO()
 
   //Again no list functions are permitted for the following
   fun <A> length(x: FunList<A>): Int = TODO()
