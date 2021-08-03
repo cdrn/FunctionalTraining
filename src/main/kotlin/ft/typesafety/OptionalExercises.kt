@@ -106,6 +106,8 @@ object OptionalExercises3 {
 
   fun <A, B> map(m: Maybe<A>, f: (A) -> B): Maybe<B> = TODO()
 
+  fun <A> filter(m: Maybe<A>, p: (A) -> Boolean): Maybe<A> = TODO()
+
   fun <A, B> fold(m: Maybe<A>, default: () -> B, f: (A) -> B): B = TODO()
 
   fun <A> orElse(m: Maybe<A>, otherwise: () -> Maybe<A>): Maybe<A> = TODO()

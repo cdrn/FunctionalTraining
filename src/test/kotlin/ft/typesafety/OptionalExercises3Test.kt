@@ -4,6 +4,7 @@ import ft.typesafety.OptionalExercises3.Just
 import ft.typesafety.OptionalExercises3.Maybe
 import ft.typesafety.OptionalExercises3.Nothing
 import ft.typesafety.OptionalExercises3.ap
+import ft.typesafety.OptionalExercises3.filter
 import ft.typesafety.OptionalExercises3.flatMap
 import ft.typesafety.OptionalExercises3.orSome
 import ft.typesafety.OptionalExercises3.map2
@@ -21,7 +22,7 @@ class OptionalExercises3Test : StringSpec({
     flatMap(Just(1)) { a -> Just(a + 1) } shouldBe Just(2)
   }
 
-  "flatMap on a Nothing" {
+  "flatMap on Nothing" {
     flatMap<Int, Int>(Nothing) { a -> Just(a + 1) } shouldBe Nothing
   }
 
@@ -29,15 +30,27 @@ class OptionalExercises3Test : StringSpec({
     map(Just(1)) { a -> a + 1 } shouldBe Just(2)
   }
 
-  "Map Nothing" {
+  "map on Nothing" {
     map<Int, Int>(Nothing) { a -> a + 1 } shouldBe Nothing
+  }
+
+  "filter in on a Just" {
+    filter(Just(2)) { a -> a > 1 } shouldBe Just(2)
+  }
+
+  "filter out on a Just" {
+    filter(Just(0)) { a -> a > 1 } shouldBe Nothing
+  }
+
+  "filter on Nothing" {
+    filter(Nothing) { _ -> true } shouldBe Nothing
   }
 
   "fold on a Just" {
     fold(Just(1), default = { 0 }) { a -> a + 1 } shouldBe 2
   }
 
-  "fold Nothing" {
+  "fold on Nothing" {
     fold<Int, Int>(Nothing, default = { 0 }) { a -> a + 1 } shouldBe 0
   }
 
@@ -63,6 +76,10 @@ class OptionalExercises3Test : StringSpec({
 
   "map2 on Nothing" {
     map2({ a: Int, b: Int -> a + b }, Just(1), Nothing) shouldBe Nothing
+  }
+
+  "sequence on an empty List" {
+    sequence(listOf<Maybe<Int>>()) shouldBe Just(listOf<Int>())
   }
 
   "sequence on a List of Justs" {
