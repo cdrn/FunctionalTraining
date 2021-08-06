@@ -77,7 +77,7 @@ object OptionalExercises2 {
   fun getEnvForHost(host: String): String = TODO()
 
   // See how many ways you can implement this.
-  // Will either return "Connected to <squareup host>" or "not connected"
+  // Will either return "connected to <squareup host>" or "not connected"
   fun connectToSquareupHostsOnly(host: String): String = TODO()
 
   fun createConnection(domain: String): String = "connected to $domain"
