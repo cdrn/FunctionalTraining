@@ -1,7 +1,7 @@
 val arrowVersion by extra { "0.10.0" }
 
 plugins {
-    kotlin("jvm") version "1.3.30"
+    kotlin("jvm") version "1.6.20"
 }
 
 repositories {
