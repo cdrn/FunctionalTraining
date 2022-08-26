@@ -1,5 +1,6 @@
 package ft.typesafety
 
+import arrow.core.curried
 import ft.typesafety.OptionalExercises3.Just
 import ft.typesafety.OptionalExercises3.Maybe
 import ft.typesafety.OptionalExercises3.Nothing
@@ -12,9 +13,8 @@ import ft.typesafety.OptionalExercises3.sequence
 import ft.typesafety.OptionalExercises3.orElse
 import ft.typesafety.OptionalExercises3.fold
 import ft.typesafety.OptionalExercises3.map
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
-import arrow.syntax.function.curried
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class OptionalExercises3Test : StringSpec({
 
@@ -43,7 +43,7 @@ class OptionalExercises3Test : StringSpec({
   }
 
   "filter on Nothing" {
-    filter(Nothing) { _ -> true } shouldBe Nothing
+    filter(Nothing) { true } shouldBe Nothing
   }
 
   "fold on a Just" {
@@ -79,7 +79,7 @@ class OptionalExercises3Test : StringSpec({
   }
 
   "sequence on an empty List" {
-    sequence(listOf<Maybe<Int>>()) shouldBe Just(listOf<Int>())
+    sequence(listOf<Maybe<Int>>()) shouldBe Just(listOf())
   }
 
   "sequence on a List of Justs" {

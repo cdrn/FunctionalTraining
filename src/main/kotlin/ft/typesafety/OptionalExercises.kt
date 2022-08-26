@@ -96,7 +96,7 @@ object OptionalExercises2 {
 
 object OptionalExercises3 {
 
-  interface Maybe<out A>
+  sealed interface Maybe<out A>
 
   data class Just<A>(val get: A) : Maybe<A>
 
