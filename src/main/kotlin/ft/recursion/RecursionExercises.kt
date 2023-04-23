@@ -41,10 +41,18 @@ object RecursionExercises {
   fun minusOne(n: Int) = n - 1
 
   // Add two non-negative Integers together.  You are only allowed to use plusOne and minusOne above
-  fun add(a: Int, b: Int): Int = TODO()
+  fun add(a: Int, b: Int): Int {
+    if (b == 0) return a
+    else return add(plusOne(a), minusOne(b))
+  }
 
   // You are not permitted to use any list functions such as map, flatMap, ++, flatten etc
-  fun sum(x: FunList<Int>): Int = TODO()
+  fun sum(x: FunList<Int>): Int {
+    return when (x) {
+      is Nil -> 0
+      is Cons -> add(x.head, sum(x.tail))
+    }
+  }
 
   //Again no list functions are permitted for the following
   fun <A> length(x: FunList<A>): Int = TODO()
