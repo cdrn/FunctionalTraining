@@ -1,6 +1,9 @@
 package ft.typesafety
 
+import arrow.core.None
 import arrow.core.Option
+import arrow.core.Some
+import arrow.core.some
 
 /**
  * Use pattern matching and recursion.  No vars, no loops, no overriding.
@@ -59,11 +62,29 @@ object OptionalExercises1 {
 
   val config = mapOf("host" to "squareup.com", "port" to "8080")
 
-  fun getFromConfig(key: String): Option<String> = TODO()
+  fun getFromConfig(key: String): Option<String> {
+    val configItem = config.get(key)
+    return when (configItem) {
+        null -> None
+        else -> Option(configItem)
+    }
+  }
 
-  fun lengthOfHost(): Option<Int> = TODO()
+  fun lengthOfHost(): Option<Int> {
+    val hostName = config.get("host")
+    return when (hostName) {
+      null -> None
+      else -> Option(hostName.length)
+    }
+  }
 
-  fun portPlus1000(): Option<Int> = TODO()
+  fun portPlus1000(): Option<Int> {
+    val port = config.get("port")?.toIntOrNull()
+    return when (port) {
+      null -> None
+      else -> Option( port + 1000)
+    }
+  }
 }
 
 object OptionalExercises2 {
