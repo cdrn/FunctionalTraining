@@ -95,11 +95,21 @@ object OptionalExercises2 {
   val envs = mapOf("squareup.com" to "prod", "test.squareup.com" to "test", "amazon.com" to "stage")
 
   // Should return the host string if successful or "couldn't resolve" if unsuccessful
-  fun getEnvForHost(host: String): String = TODO()
+  fun getEnvForHost(host: String): String {
+    return envs[hosts[host]] ?: "couldn't resolve"
+  }
+
+  fun getHost (host: String): String {
+    return hosts[host] ?: "couldn't resolve"
+  }
 
   // See how many ways you can implement this.
   // Will either return "connected to <squareup host>" or "not connected"
-  fun connectToSquareupHostsOnly(host: String): String = TODO()
+  fun connectToSquareupHostsOnly(host: String): String {
+    val hostEnv = getEnvForHost(host)
+    val hostLabel = getHost(host)
+    return if (hostEnv !== "couldn't resolve") "connected to $hostLabel" else "not connected"
+  }
 
   fun createConnection(domain: String): String = "connected to $domain"
 }
@@ -123,7 +133,12 @@ object OptionalExercises3 {
 
   object Nothing : Maybe<kotlin.Nothing>
 
-  fun <A, B> flatMap(m: Maybe<A>, f: (A) -> Maybe<B>): Maybe<B> = TODO()
+  fun <A, B> flatMap(m: Maybe<A>, f: (A) -> Maybe<B>): Maybe<B> {
+    return when (m) {
+      is Just -> f(m.get)
+      Nothing -> Nothing
+    }
+  }
 
   fun <A, B> map(m: Maybe<A>, f: (A) -> B): Maybe<B> = TODO()
 
