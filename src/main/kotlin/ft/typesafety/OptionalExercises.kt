@@ -1,9 +1,6 @@
 package ft.typesafety
 
-import arrow.core.None
-import arrow.core.Option
-import arrow.core.Some
-import arrow.core.some
+import arrow.core.*
 
 /**
  * Use pattern matching and recursion.  No vars, no loops, no overriding.
@@ -70,21 +67,11 @@ object OptionalExercises1 {
     }
   }
 
-  fun lengthOfHost(): Option<Int> {
-    val hostName = config.get("host")
-    return when (hostName) {
-      null -> None
-      else -> Option(hostName.length)
-    }
-  }
+  fun lengthOfHost(): Option<Int> = getFromConfig("host").map(String::length)
 
-  fun portPlus1000(): Option<Int> {
-    val port = config.get("port")?.toIntOrNull()
-    return when (port) {
-      null -> None
-      else -> Option( port + 1000)
-    }
-  }
+
+  // Two maps is identical to the composition of two funcs in a single map
+  fun portPlus1000(): Option<Int> = getFromConfig("port").map{it.toInt()}.map{ it + 1000}
 }
 
 object OptionalExercises2 {
@@ -96,7 +83,12 @@ object OptionalExercises2 {
 
   // Should return the host string if successful or "couldn't resolve" if unsuccessful
   fun getEnvForHost(host: String): String {
-    return envs[hosts[host]] ?: "couldn't resolve"
+    // Option<Int> -> Int->String -> Option<String>
+    // Option<String> -> String->Option<String> -> Option<String>
+    return hosts.getOption(host).flatMap{host1:String ->
+      val option: Option<String> = envs.getOption(host1)
+      option
+    }.getOrElse { "couldn't resolve" }
   }
 
   fun getHost (host: String): String {
@@ -106,11 +98,11 @@ object OptionalExercises2 {
   // See how many ways you can implement this.
   // Will either return "connected to <squareup host>" or "not connected"
   fun connectToSquareupHostsOnly(host: String): String {
-    val hostEnv = getEnvForHost(host)
-    val hostLabel = getHost(host)
-    return if (hostEnv !== "couldn't resolve") "connected to $hostLabel" else "not connected"
-  }
-
+    val newHost: Option<String> = hosts.getOption(host)
+//    val squareHost = newHost.flatMap{ if(it.contains("squareup")) Option(it) else None }.map{createConnection(it)}.getOrElse { "not connected" }
+    val squareHost = newHost.filter{ it.contains("squareup") }.map(::createConnection).getOrElse { "not connected" }
+    return squareHost
+    }
   fun createConnection(domain: String): String = "connected to $domain"
 }
 
@@ -133,6 +125,7 @@ object OptionalExercises3 {
 
   object Nothing : Maybe<kotlin.Nothing>
 
+  // Try to implement flatmap in terms of map and vice versa
   fun <A, B> flatMap(m: Maybe<A>, f: (A) -> Maybe<B>): Maybe<B> {
     return when (m) {
       is Just -> f(m.get)
