@@ -128,24 +128,71 @@ object OptionalExercises3 {
   // Try to implement flatmap in terms of map and vice versa
   fun <A, B> flatMap(m: Maybe<A>, f: (A) -> Maybe<B>): Maybe<B> {
     return when (m) {
-      is Just -> f(m.get)
       Nothing -> Nothing
+      is Just -> f(m.get)
     }
   }
 
-  fun <A, B> map(m: Maybe<A>, f: (A) -> B): Maybe<B> = TODO()
 
-  fun <A> filter(m: Maybe<A>, p: (A) -> Boolean): Maybe<A> = TODO()
+//  basic map impl
+//  fun <A, B> map(m: Maybe<A>, f: (A) -> B): Maybe<B> {
+//    return when (m) {
+//      Nothing -> Nothing
+//      is Just -> Just(f(m.get))
+//    }
+//  }
 
-  fun <A, B> fold(m: Maybe<A>, default: () -> B, f: (A) -> B): B = TODO()
 
-  fun <A> orElse(m: Maybe<A>, otherwise: () -> Maybe<A>): Maybe<A> = TODO()
+  // Map impl in terms of flatmap
+  // The reverse is trivial!
+  fun <A, B> map(m: Maybe<A>, f: (A) -> B): Maybe<B> {
+    return when (m) {
+      Nothing -> Nothing
+      is Just -> flatMap(m) { a -> Just(f(m.get)) }
+      }
+    }
 
-  fun <A> orSome(m: Maybe<A>, default: () -> A): A = TODO()
+  fun <A> filter(m: Maybe<A>, p: (A) -> Boolean): Maybe<A> {
+    return when (m) {
+      Nothing -> Nothing
+      is Just -> if (p(m.get)) m else Nothing
+    }
+  }
 
-  fun <A, B, C> map2(m1: Maybe<A>, m2: Maybe<B>, f: (A, B) -> C): Maybe<C> = TODO()
 
-  fun <A> sequence(l: List<Maybe<A>>): Maybe<List<A>> = TODO()
+  // This is just reduce?
+  fun <A, B> fold(m: Maybe<A>, default: () -> B, f: (A) -> B): B {
+    return when (m) {
+      Nothing -> default()
+      is Just -> f(m.get)
+    }
+  }
+
+  fun <A> orElse(m: Maybe<A>, otherwise: () -> Maybe<A>): Maybe<A> {
+    return when (m) {
+      Nothing -> otherwise()
+      is Just -> m
+    }
+  }
+
+  fun <A> orSome(m: Maybe<A>, default: () -> A): A {
+    return when (m) {
+      Nothing -> default()
+      is Just -> m.get
+    }
+  }
+
+  // Why does the escape hatch version of this not work
+  fun <A, B, C> map2(m1: Maybe<A>, m2: Maybe<B>, f: (A, B) -> C): Maybe<C> {
+    if (m1 is Just && m2 is Just) {
+      return Just(f(m1.get, m2.get))
+    }
+    return Nothing
+  }
+
+  fun <A> sequence(l: List<Maybe<A>>): Maybe<List<A>> {
+
+  }
 
   fun <A, B> ap(m1: Maybe<A>, m2: Maybe<(A) -> B>): Maybe<B> = TODO()
 }
